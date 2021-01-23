@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func producer(out chan<- int)  {
 	for i := 0; i < 10; i++ {
@@ -19,4 +22,10 @@ func main()  {
 	ch := make(chan int)
 	go producer(ch)
 	consumer(ch)
+
+	ticker := time.NewTicker(time.Second)
+	for {
+		<-ticker.C
+		fmt.Println("loop")
+	}
 }
