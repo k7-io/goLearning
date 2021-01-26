@@ -1,0 +1,8 @@
+#need to set three variable
+CGO_ENABLED
+GOOS
+GOARCH
+#windows compile linux
+SET CGO_ENABLED=0
+SET GOOS=linux
+SET GOARCH=amd64
