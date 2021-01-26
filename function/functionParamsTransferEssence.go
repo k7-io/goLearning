@@ -2,24 +2,24 @@ package main
 
 import "fmt"
 
-func passByValue(numPara int)  {
+func passByValue(numPara int) {
 	fmt.Printf("numPara's address of passByValue:%p\n", &numPara)
 	numPara = 100
 }
 
-func passByReference(numPara *int)  {
+func passByReference(numPara *int) {
 	fmt.Printf("numPara's address of passByReference:%p\n", &numPara)
 	fmt.Printf("numPara point to address of passByReference:%p\n", numPara)
 	*numPara = 100
 }
 
-func passByReferenceMap(mapNumReference map[int]int)  {
+func passByReferenceMap(mapNumReference map[int]int) {
 	fmt.Printf("mapNumReference's address of passByReferenceMap:%p\n", &mapNumReference)
 	fmt.Printf("mapNumReference point to address of passByReferenceMap:%p\n", mapNumReference)
 	mapNumReference[1] = 100
 }
 
-func main()  {
+func main() {
 	num := 1
 	fmt.Printf("num's address of main:%p\n", &num)
 	passByValue(num)
@@ -27,7 +27,7 @@ func main()  {
 	passByReference(&num)
 	fmt.Println("num:", num)
 
-	mapNum := map[int]int{1:10}
+	mapNum := map[int]int{1: 10}
 	fmt.Printf("mapNum's address of main:%p\n", &mapNum)
 	fmt.Printf("mapNum point to address of main:%p\n", mapNum)
 	fmt.Println("mapNum:", mapNum)

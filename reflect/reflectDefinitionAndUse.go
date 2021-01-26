@@ -8,22 +8,21 @@ import (
 type Number int
 
 type Person struct {
-
 }
 
-func checkType(t reflect.Type)  {
+func checkType(t reflect.Type) {
 	if t.Kind() == reflect.Ptr {
-		fmt.Printf("variable's type %v, point to variable",t.Kind())
+		fmt.Printf("variable's type %v, point to variable", t.Kind())
 		t = t.Elem()
 	}
 	fmt.Printf("variable's type name => %v, type's type => %v\n", t.Name(), t.Kind())
 }
 
-func checkValue(v reflect.Value)  {
+func checkValue(v reflect.Value) {
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
-	if v.Kind() == reflect.Int{
+	if v.Kind() == reflect.Int {
 		var v1 int = int(v.Int())
 		var v2 int = v.Interface().(int)
 		fmt.Println(v1, v2)
@@ -37,7 +36,7 @@ func Equal(a, b int) bool {
 	return false
 }
 
-func main()  {
+func main() {
 	var a interface{} = "I am string"
 	typeOfa := reflect.TypeOf(a)
 	fmt.Println("variable a's type is:", typeOfa.Name())
@@ -48,9 +47,9 @@ func main()  {
 
 	var b int
 	typeOfb := reflect.TypeOf(b)
-	if typeOfb.Kind() == reflect.Int{
+	if typeOfb.Kind() == reflect.Int {
 		fmt.Println("variable a's kind is int")
-	}else{
+	} else {
 		fmt.Println("variable a's kind is not int")
 	}
 
