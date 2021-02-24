@@ -26,31 +26,62 @@ func (db *DB) Close() {
 	}
 }
 
-func (db *DB) InQueue(name string, values ...string) (reply interface{}, err error) {
-	return db.client.Do("RPUSH", name, values)
+func (db *DB) InQueue(name string, values []interface{}) (err error) {
+	size := len(values)
+	fmt.Println("InQueue size:", size)
+	for i := 0; i < size; i++ {
+		_, err := db.client.Do("RPUSH", name, values[i])
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (db *DB) Len(name string) (int, error) {
 	return redis.Int(db.client.Do("LLEN", name))
 }
 
-func (db *DB) OutQueueOne(name string) (value string, err error) {
-	return redis.String(db.client.Do("LPOP", name))
+func (db *DB) OutQueueOne(name string) (value interface{}, err error) {
+	reply, err := db.client.Do("LPOP", name)
+	return reply, err
+	//return db.client.Do("LPOP", name)
 }
 
-func (db *DB) OutQueue(name string) (values []string, err error) {
+func (db *DB) OutQueue(name string) (values []interface{}, err error) {
 	size, err := db.Len(name)
 	if err != nil {
 		return nil, err
 	}
 	for i := 0; i < size; i++ {
 		ele, err := db.OutQueueOne(name)
+		fmt.Println("OutQueueOne ele::", ele)
 		if err != nil {
 			return nil, err
 		}
 		values = append(values, ele)
+		fmt.Println("OutQueue values::", values)
 	}
 	return values, nil
+}
+
+func (db *DB) DelDBName(name string) (reply interface{}, err error) {
+	return db.client.Do("del", name)
+}
+
+func StringSliceEqual(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	if (a == nil) != (b == nil) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func main() {
