@@ -28,7 +28,6 @@ func (db *DB) Close() {
 
 func (db *DB) InQueue(name string, values []interface{}) (err error) {
 	size := len(values)
-	fmt.Println("InQueue size:", size)
 	for i := 0; i < size; i++ {
 		_, err := db.client.Do("RPUSH", name, values[i])
 		if err != nil {
@@ -55,12 +54,10 @@ func (db *DB) OutQueue(name string) (values []interface{}, err error) {
 	}
 	for i := 0; i < size; i++ {
 		ele, err := db.OutQueueOne(name)
-		fmt.Println("OutQueueOne ele::", ele)
 		if err != nil {
 			return nil, err
 		}
 		values = append(values, ele)
-		fmt.Println("OutQueue values::", values)
 	}
 	return values, nil
 }
