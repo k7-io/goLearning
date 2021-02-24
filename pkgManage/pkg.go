@@ -4,21 +4,22 @@ import (
 	//remote import
 	//import github.com/gin-gonic/gin
 	//alias import
+	"database/sql"
 	print "fmt"
 	date "time"
-	"database/sql"
+
 	_ "github.com/go-sql-driver/mysql"
+
 	//anonymous import
 	"net/http"
 	_ "net/http/pprof"
-	"pkgTest"
 )
 
-func ping(writer http.ResponseWriter, request *http.Request)  {
+func ping(writer http.ResponseWriter, request *http.Request) {
 	writer.Write([]byte("{\"message\":\"pong\"}"))
 }
 
-func main()  {
+func main() {
 	//r := gin.Default()
 	//r.GET("/ping", func(c *gin.Context){
 	//	c.JSON(200, gin.H{
@@ -26,8 +27,6 @@ func main()  {
 	//	})
 	//})
 	//r.Run()
-
-	print.Println(pkgTest.SumNum)
 
 	//alias import use
 	print.Println("the current data is:", date.Now().Day())
