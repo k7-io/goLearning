@@ -19,4 +19,5 @@ require (
 	//golang.org/x/tools v0.1.0 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
+ 	github.com/gomodule/redigo v1.8.4 // indirect
 )
