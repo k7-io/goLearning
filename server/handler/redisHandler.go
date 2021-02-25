@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"fmt"
@@ -84,22 +84,4 @@ func HttpRedisOutQueue(c *gin.Context) {
 		"message": "success",
 		"outData": resStr,
 	})
-}
-
-func main() {
-	r := gin.Default()
-
-	r.GET("/redis/list/:function", func(c *gin.Context) {
-		function := c.Param("function")
-		if function == "len" {
-			HttpRedisLen(c)
-		} else if function == "inQueue" {
-			HttpRedisInQueue(c)
-		} else if function == "outQueue" {
-			HttpRedisOutQueue(c)
-		} else {
-			c.String(404, "Error function %s", function)
-		}
-	})
-	r.Run(":8000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
