@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MainRedis() {
+func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/redis/list/:function", func(c *gin.Context) {
@@ -31,5 +31,10 @@ func MainRedis() {
 			c.String(404, "Error function %s", function)
 		}
 	})
+	return r
+}
+
+func MainRedis() {
+	r := SetupRouter()
 	r.Run(":8000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
