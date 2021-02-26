@@ -28,6 +28,18 @@ func dbTest() {
 	fmt.Printf("size:%v\n", size)
 }
 
+// HttpRedisLen godoc
+// @Summary Http redis len
+// @Description show redis db len by name
+// @Tags HttpRedis
+// @Accept  json
+// @Produce  json
+// @Param name query string true "db name"
+// @Success 200 {object} model.Account
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTP404Error
+// @Failure 500 {object} httputil.HTTP5xxError
+// @Router /redis/list/len/{name} [get]
 func HttpRedisLen(c *gin.Context) {
 	name := c.DefaultQuery("name", "myLen")
 	fmt.Println("HttpRedisLen name:", name)
@@ -44,6 +56,19 @@ func HttpRedisLen(c *gin.Context) {
 	})
 }
 
+// HttpRedisInQueue godoc
+// @Summary Http redis inQueue
+// @Description add elements to a redis db
+// @Tags HttpRedis
+// @Accept  json
+// @Produce  json
+// @Param name query string true "name"
+// @Param element query array true "element"
+// @Success 200 {object} model.Account
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTP404Error
+// @Failure 500 {object} httputil.HTTP5xxError
+// @Router /redis/list/inQueue/{name} [get]
 func HttpRedisInQueue(c *gin.Context) {
 	name := c.DefaultQuery("name", "myTestInQueue")
 	eleList, has := c.GetQueryArray("element")
@@ -67,6 +92,18 @@ func HttpRedisInQueue(c *gin.Context) {
 	})
 }
 
+// HttpRedisOutQueue godoc
+// @Summary Http redis outQueue
+// @Description remove elements from a redis db
+// @Tags HttpRedis
+// @Accept  json
+// @Produce  json
+// @Param name query string true "db name"
+// @Success 200 {object} model.Account
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTP404Error
+// @Failure 500 {object} httputil.HTTP5xxError
+// @Router /redis/list/outQueue/{name} [get]
 func HttpRedisOutQueue(c *gin.Context) {
 	name := c.DefaultQuery("name", "myTestOutQueue")
 	res, err := db.OutQueue(name)
