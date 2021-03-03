@@ -39,7 +39,7 @@ func dbTest() {
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
-// @Router /redis/list/len/{name} [get]
+// @Router /redis/list/len?name={name} [get]
 func HttpRedisLen(c *gin.Context) {
 	name := c.DefaultQuery("name", "myLen")
 	fmt.Println("HttpRedisLen name:", name)
