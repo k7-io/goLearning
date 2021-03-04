@@ -1,0 +1,172 @@
+basePath: /v1/api
+definitions:
+  httputil.HTTP5xxError:
+    properties:
+      code:
+        example: 500
+        type: integer
+      message:
+        example: Server internal err
+        type: string
+    type: object
+  httputil.HTTP404Error:
+    properties:
+      code:
+        example: 404
+        type: integer
+      message:
+        example: Not find
+        type: string
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  model.ListInQueueStruct:
+    properties:
+      element:
+        example:
+        - 1
+        - 2
+        - 3
+        items:
+          type: integer
+        type: array
+      name:
+        example: list name
+        type: string
+    type: object
+  model.ListLenOutQueueStruct:
+    properties:
+      name:
+        example: list name
+        type: string
+    type: object
+  model.ResponseMessage:
+    properties:
+      message:
+        example: success
+        format: string
+        type: string
+      size:
+        example: 4
+        type: integer
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a http redis queue API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: HTTP redis queue API
+  version: "1.0"
+paths:
+  /redis/list/inQueue:
+    post:
+      consumes:
+      - application/json
+      description: add elements to a redis db
+      parameters:
+      - description: message
+        in: body
+        name: massage
+        required: true
+        schema:
+          $ref: '#/definitions/model.ListInQueueStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseMessage'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTP404Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTP5xxError'
+      summary: Http redis inQueue
+      tags:
+      - HttpRedis
+  /redis/list/len:
+    post:
+      consumes:
+      - application/json
+      description: show redis db len by name
+      parameters:
+      - description: db name
+        in: body
+        name: name
+        required: true
+        schema:
+          $ref: '#/definitions/model.ListLenOutQueueStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseMessage'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTP404Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTP5xxError'
+      summary: Http redis len
+      tags:
+      - HttpRedis
+  /redis/list/outQueue:
+    post:
+      consumes:
+      - application/json
+      description: remove elements from a redis db
+      parameters:
+      - description: db name
+        in: body
+        name: name
+        required: true
+        schema:
+          $ref: '#/definitions/model.ListLenOutQueueStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseMessage'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTP404Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTP5xxError'
+      summary: Http redis outQueue
+      tags:
+      - HttpRedis
+swagger: "2.0"
