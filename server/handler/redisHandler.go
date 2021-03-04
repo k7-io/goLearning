@@ -3,6 +3,9 @@ package handler
 import (
 	"fmt"
 	"go_learning/cache"
+	"go_learning/model"
+	"log"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,15 +37,19 @@ func dbTest() {
 // @Tags HttpRedis
 // @Accept  json
 // @Produce  json
-// @Param name query string true "db name"
-// @Success 200 {object} model.Account
+// @Param name body model.ListLenOutQueueStruct true "db name"
+// @Success 200 {object} model.ResponseMessage
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
-// @Router /redis/list/len?name={name} [get]
+// @Router /redis/list/len [post]
 func HttpRedisLen(c *gin.Context) {
-	name := c.DefaultQuery("name", "myLen")
-	fmt.Println("HttpRedisLen name:", name)
+	var lenStruct model.ListLenOutQueueStruct
+	fmt.Println("len full path:", c.FullPath())
+	if err := c.BindJSON(&lenStruct); err != nil {
+		log.Fatal(err.Error())
+	}
+	name := lenStruct.Name
 	size, err := db.Len(name)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -62,19 +69,21 @@ func HttpRedisLen(c *gin.Context) {
 // @Tags HttpRedis
 // @Accept  json
 // @Produce  json
-// @Param name query string true "name"
-// @Param element query array true "element"
-// @Success 200 {object} model.Account
+// @Param massage body model.ListInQueueStruct true "message"
+// @Success 200 {object} model.ResponseMessage
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
-// @Router /redis/list/inQueue/{name} [get]
+// @Router /redis/list/inQueue [post]
 func HttpRedisInQueue(c *gin.Context) {
-	name := c.DefaultQuery("name", "myTestInQueue")
-	eleList, has := c.GetQueryArray("element")
-	if has {
-		fmt.Printf("eleList:%v\n", eleList)
+	var inQueueStruct model.ListInQueueStruct
+	fmt.Println("inQueue full path:", c.FullPath())
+	if err := c.BindJSON(&inQueueStruct); err != nil {
+		log.Fatal(err.Error())
 	}
+	name := inQueueStruct.Name
+	eleList := inQueueStruct.Items
+	fmt.Println("element::", eleList, reflect.TypeOf(eleList))
 	inData := make([]interface{}, len(eleList))
 	for i := 0; i < len(inData); i++ {
 		inData[i] = eleList[i]
@@ -98,14 +107,19 @@ func HttpRedisInQueue(c *gin.Context) {
 // @Tags HttpRedis
 // @Accept  json
 // @Produce  json
-// @Param name query string true "db name"
-// @Success 200 {object} model.Account
+// @Param name body model.ListLenOutQueueStruct true "db name"
+// @Success 200 {object} model.ResponseMessage
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
-// @Router /redis/list/outQueue/{name} [get]
+// @Router /redis/list/outQueue [post]
 func HttpRedisOutQueue(c *gin.Context) {
-	name := c.DefaultQuery("name", "myTestOutQueue")
+	var outStruct model.ListLenOutQueueStruct
+	fmt.Println("len full path:", c.FullPath())
+	if err := c.BindJSON(&outStruct); err != nil {
+		log.Fatal(err.Error())
+	}
+	name := outStruct.Name
 	res, err := db.OutQueue(name)
 	if err != nil {
 		c.JSON(400, gin.H{

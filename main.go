@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "go_learning/docs"
 	"go_learning/server"
+
+	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 //func main() {
@@ -20,7 +21,7 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host localhost:8000
-// @BasePath /v1
+// @BasePath /v1/api
 func main() {
 	r := gin.Default()
 	server.SetupRedisRouter(r)

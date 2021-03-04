@@ -11,9 +11,9 @@ func SetupRedisRouter(r *gin.Engine) {
 	{
 		// nested group:list
 		listGroup := group.Group("list")
-		listGroup.GET("len", handler.HttpRedisLen)
-		listGroup.GET("inQueue", handler.HttpRedisInQueue)
-		listGroup.GET("outQueue", handler.HttpRedisOutQueue)
+		listGroup.POST("len", handler.HttpRedisLen)
+		listGroup.POST("inQueue", handler.HttpRedisInQueue)
+		listGroup.POST("outQueue", handler.HttpRedisOutQueue)
 		// todo: nested group:set
 		// todo: nested group:zset
 	}
@@ -21,7 +21,7 @@ func SetupRedisRouter(r *gin.Engine) {
 }
 
 func MainRedis() {
-	r := gin.New()
+	r := gin.Default()
 	SetupRedisRouter(r)
 	r.Run(":8000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
