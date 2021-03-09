@@ -4,6 +4,7 @@ import (
 	_ "go_learning/docs"
 	"go_learning/server"
 	"go_learning/server/handler"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -28,7 +29,7 @@ func main() {
 	r.POST("/v1/api/json", handler.UserPwdHandler)
 	r.POST("/v1/api/upload", handler.FileUploadHandler)
 	server.SetupRedisRouter(r)
-
+	r.StaticFS("/static", http.Dir("./static"))
 	url := ginSwagger.URL("http://www.hyh.com:8000/swagger/doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	r.Run("0.0.0.0:8000")
