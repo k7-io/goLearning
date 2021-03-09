@@ -26,6 +26,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.POST("/v1/api/json", handler.UserPwdHandler)
+	r.POST("/v1/api/fileUpload", handler.FileUploadHandler)
 	server.SetupRedisRouter(r)
 
 	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json") // The url pointing to API definition
