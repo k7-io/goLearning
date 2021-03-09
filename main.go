@@ -3,6 +3,7 @@ package main
 import (
 	_ "go_learning/docs"
 	"go_learning/server"
+	"go_learning/server/handler"
 
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -24,6 +25,7 @@ import (
 // @BasePath /v1/api
 func main() {
 	r := gin.Default()
+	r.POST("/v1/api/json", handler.UserPwdHandler)
 	server.SetupRedisRouter(r)
 
 	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json") // The url pointing to API definition

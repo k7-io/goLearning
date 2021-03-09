@@ -28,6 +28,58 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/json": {
+            "post": {
+                "description": "get username\u0026password from user input",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GeneralHandler"
+                ],
+                "summary": "solve username\u0026password",
+                "parameters": [
+                    {
+                        "description": "input message",
+                        "name": "inputMessage",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTP404Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTP5xxError"
+                        }
+                    }
+                }
+            }
+        },
         "/redis/list/inQueue": {
             "post": {
                 "description": "add elements to a redis db",
@@ -265,6 +317,19 @@ var doc = `{
                 "size": {
                     "type": "integer",
                     "example": 4
+                }
+            }
+        },
+        "model.UserInfo": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "123"
+                },
+                "user_name": {
+                    "type": "string",
+                    "example": "xiaoming"
                 }
             }
         }

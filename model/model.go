@@ -13,3 +13,8 @@ type ListInQueueStruct struct {
 	Name  string `json:"name" example:"list name"`
 	Items []int  `json:"element" example:"1,2,3"`
 }
+
+type UserInfo struct {
+	UserName string `form:"username" json:"user_name" example:"xiaoming"`
+	Password string `form:"password" json:"password" example:"123"`
+}

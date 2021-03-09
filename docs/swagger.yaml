@@ -57,6 +57,15 @@ definitions:
         example: 4
         type: integer
     type: object
+  model.UserInfo:
+    properties:
+      password:
+        example: "123"
+        type: string
+      user_name:
+        example: xiaoming
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact: {}
@@ -67,6 +76,40 @@ info:
   title: HTTP redis queue API
   version: "1.0"
 paths:
+  /json:
+    post:
+      consumes:
+      - application/json
+      description: get username&password from user input
+      parameters:
+      - description: input message
+        in: body
+        name: inputMessage
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTP404Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTP5xxError'
+      summary: solve username&password
+      tags:
+      - GeneralHandler
   /redis/list/inQueue:
     post:
       consumes:
