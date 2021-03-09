@@ -8,18 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// FileUploadHandler godoc
-// @Summary upload file
-// @Description upload file
-// @Tags GeneralHandler
-// @Accept  json
+// @Summary 上传文件
+// @Description
+// @Tags file
+// @Accept multipart/form-data
+// @Param file formData file true "file"
 // @Produce  json
-// @Param inputMessage body model.UserInfo true "input message"
-// @Success 200 {object} model.UserInfo
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTP404Error
-// @Failure 500 {object} httputil.HTTP5xxError
-// @Router /json [post]
+// @Success 200 {object} filters.Response {"code":200,"data":nil,"msg":""}
+// @Router /upload [post]
 func FileUploadHandler(c *gin.Context) {
 	// 单个文件
 	file, err := c.FormFile("f1")
