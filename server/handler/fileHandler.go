@@ -27,10 +27,10 @@ func FileUploadHandler(c *gin.Context) {
 	}
 
 	log.Println(file.Filename)
-	dst := fmt.Sprintf("./tmp/%s", file.Filename)
+	dst := fmt.Sprintf("./static/%s", file.Filename)
 	// 上传文件到指定的目录
 	c.SaveUploadedFile(file, dst)
 	c.JSON(http.StatusOK, gin.H{
-		"message": fmt.Sprintf("'%s' uploaded!", file.Filename),
+		"message": fmt.Sprintf("http://www.hyh.com:8000/static/%s", file.Filename),
 	})
 }
