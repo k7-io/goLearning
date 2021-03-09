@@ -8,17 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary 上传文件
+// @Summary upload file
 // @Description
 // @Tags file
 // @Accept multipart/form-data
 // @Param file formData file true "file"
 // @Produce  json
-// @Success 200 {object} filters.Response {"code":200,"data":nil,"msg":""}
+// @Success 200 {object} model.ResponseMessage {"message":200,"size": 4}
 // @Router /upload [post]
 func FileUploadHandler(c *gin.Context) {
 	// 单个文件
-	file, err := c.FormFile("f1")
+	file, err := c.FormFile("file")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),

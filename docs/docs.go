@@ -235,6 +235,37 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/upload": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "upload file",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "message\":200,\"size\": 4}",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResponseMessage"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -348,7 +379,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "localhost:8000",
+	Host:        "www.hyh.com:8000",
 	BasePath:    "/v1/api",
 	Schemes:     []string{},
 	Title:       "HTTP redis queue API",

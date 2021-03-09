@@ -21,15 +21,15 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host localhost:8000
+// @host www.hyh.com:8000
 // @BasePath /v1/api
 func main() {
 	r := gin.Default()
 	r.POST("/v1/api/json", handler.UserPwdHandler)
-	r.POST("/v1/api/fileUpload", handler.FileUploadHandler)
+	r.POST("/v1/api/upload", handler.FileUploadHandler)
 	server.SetupRedisRouter(r)
 
-	url := ginSwagger.URL("http://localhost:8000/swagger/doc.json") // The url pointing to API definition
+	url := ginSwagger.URL("http://www.hyh.com:8000/swagger/doc.json") // The url pointing to API definition
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
-	r.Run(":8000")
+	r.Run("0.0.0.0:8000")
 }

@@ -66,7 +66,7 @@ definitions:
         example: xiaoming
         type: string
     type: object
-host: localhost:8000
+host: www.hyh.com:8000
 info:
   contact: {}
   description: This is a http redis queue API
@@ -212,4 +212,24 @@ paths:
       summary: Http redis outQueue
       tags:
       - HttpRedis
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message":200,"size": 4}'
+          schema:
+            $ref: '#/definitions/model.ResponseMessage'
+      summary: upload file
+      tags:
+      - file
 swagger: "2.0"
