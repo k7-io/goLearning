@@ -28,6 +28,7 @@ func main() {
 	r := gin.Default()
 	r.POST("/v1/api/json", handler.UserPwdHandler)
 	r.POST("/v1/api/upload", handler.FileUploadHandler)
+	r.POST("/v1/api/multiUpload", handler.MultiFileUpHandler)
 	server.SetupRedisRouter(r)
 	r.StaticFS("/static", http.Dir("./static"))
 	url := ginSwagger.URL("http://www.hyh.com:8000/swagger/doc.json") // The url pointing to API definition

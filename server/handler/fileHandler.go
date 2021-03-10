@@ -34,3 +34,19 @@ func FileUploadHandler(c *gin.Context) {
 		"message": fmt.Sprintf("http://www.hyh.com:8000/static/%s", file.Filename),
 	})
 }
+
+func MultiFileUpHandler(c *gin.Context) {
+	// Multipart form
+	form, _ := c.MultipartForm()
+	files := form.File["file"]
+
+	for _, file := range files {
+		log.Println(file.Filename)
+		dst := fmt.Sprintf("./static/%s", file.Filename)
+		// 上传文件到指定的目录
+		c.SaveUploadedFile(file, dst)
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": fmt.Sprint("http://www.hyh.com:8000/static"),
+	})
+}
