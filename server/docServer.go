@@ -11,9 +11,8 @@ import (
 
 func SetupDocRouter(r *gin.Engine, docConf config.DocConfInfo) {
 	r.StaticFS("/static", http.Dir(docConf.StaticFilePath))
-	docUri := fmt.Sprintf("%v/swagger/*any", docConf.ApiPre)
 	docJsonUri := fmt.Sprintf("%v/swagger/doc.json", docConf.ApiPre)
 	url := ginSwagger.URL(docJsonUri) // The url pointing to API definition
-	r.GET(docUri, ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	return
 }

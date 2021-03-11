@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_learning/server/handler"
+	"goLearning/server/handler"
 )
 
 func SetupToolRouter(r *gin.Engine) {

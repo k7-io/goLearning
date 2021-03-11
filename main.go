@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"goLearning/config"
 	_ "goLearning/docs"
 	"goLearning/server"
-	"goLearning/config"
 )
 
 var (
@@ -13,10 +13,18 @@ var (
 )
 
 func init() {
+	Init()
+}
+func Init()  {
 	appConf, err = config.LoadConf("./conf/app.yml")
 	if err != nil {
 		panic(err)
 	}
+	server.RedisInit(appConf.RedisConf)
+}
+
+func Close()  {
+	server.RedisClose()
 }
 // @title HTTP redis queue API
 // @version 1.0
@@ -32,5 +40,9 @@ func main() {
 	server.SetupToolRouter(r)
 	server.SetupRedisRouter(r)
 	server.SetupDocRouter(r, appConf.DocConf)
-	r.Run("0.0.0.0:8000")
+	err := r.Run("0.0.0.0:8000")
+	if err != nil {
+		Close()
+		panic(err)
+	}
 }

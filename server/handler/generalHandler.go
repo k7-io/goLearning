@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"go_learning/model"
+	"goLearning/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
