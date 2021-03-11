@@ -236,7 +236,7 @@ var doc = `{
                 }
             }
         },
-        "/upload": {
+        "/tools/file/upload": {
             "post": {
                 "consumes": [
                     "multipart/form-data"
