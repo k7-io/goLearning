@@ -8,8 +8,9 @@ type DB struct {
 	client redis.Conn
 }
 
-func (db *DB) Init() {
-	c, err := redis.Dial("tcp", "127.0.0.1:6379")
+
+func (db *DB) Init(redisConf string) {
+	c, err := redis.Dial("tcp", redisConf)
 	if err != nil {
 		// handle error
 		panic("redis conn err:" + err.Error())
@@ -78,10 +79,3 @@ func StringSliceEqual(a, b []string) bool {
 	}
 	return true
 }
-
-//func main() {
-//	var db DB
-//	db.Init()
-//	db.Close()
-//	fmt.Println(db)
-//}
