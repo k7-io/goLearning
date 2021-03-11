@@ -19,6 +19,7 @@ type AppConfInfo struct {
 	EnableDocs      bool   `yaml:"enable_docs" json:"enable_docs"`
 	LogLevel        int    `yaml:"log_level" json:"log_level"`
 	JwtSalt         string `yaml:"jwt_salt" json:"jwt_salt"`
+	RedisConf       string `yaml:"redis_conf" json:"redis_conf"`
 	OSSConf 		OSSConfInfo `yaml:"oss_conf" json:"oss_conf"`
 	DocConf			DocConfInfo `yaml:"doc_conf" json:"doc_conf"`
 }

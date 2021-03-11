@@ -34,6 +34,7 @@ func TestNewConf(t *testing.T) {
 		OrmDebug:        true,
 		PgDataSource:    "user=postgres password=postgres dbname=test host=127.0.0.1 port=5432 sslmode=disable",
 		JwtSalt:         "testsalt",
+		RedisConf: 		 "127.0.0.1:6379",
 		OSSConf: OSSConfInfo{
 			EndPoint: "http://oss-cn-beijing.aliyuncs.com",
 			AccessKeyID: "xxxxx",
