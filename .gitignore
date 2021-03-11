@@ -6,3 +6,4 @@ tmp/
 conf/app.yml
 
 test/*_tmp.txt
+static/*
