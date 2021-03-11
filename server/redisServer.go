@@ -1,7 +1,7 @@
 package server
 
 import (
-	"go_learning/server/handler"
+	"goLearning/server/handler"
 
 	"github.com/gin-gonic/gin"
 )
