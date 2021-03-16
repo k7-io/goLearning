@@ -2,15 +2,18 @@ package test
 
 import (
 	"fmt"
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	 "goLearning/config"
+	"goLearning/config"
+	"os"
 	"testing"
+
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
+
 var (
 	appConf *config.AppConfInfo
 	ossConf config.OSSConfInfo
-	bucket *oss.Bucket
-	err error
+	bucket  *oss.Bucket
+	err     error
 )
 
 func init() {
@@ -38,14 +41,26 @@ func handleError(err error, t *testing.T) {
 }
 
 func TestPutObjectFromFile(t *testing.T) {
-	err := bucket.PutObjectFromFile("test01.txt","./a.txt")
+	err := bucket.PutObjectFromFile("test01.txt", "./a.txt")
 	if err != nil {
 		handleError(err, t)
 	}
 }
 
 func TestGetObjectToFile(t *testing.T) {
-	err := bucket.GetObjectToFile("test.txt","./da_tmp.txt")
+	err := bucket.GetObjectToFile("test01.txt", "./da_tmp.txt")
+	if err != nil {
+		handleError(err, t)
+	}
+}
+
+func TestPutObject(t *testing.T) {
+	fd, err := os.Open("./a.txt")
+	if err != nil {
+		handleError(err, t)
+	}
+	defer fd.Close()
+	err = bucket.PutObject("test02.txt", fd)
 	if err != nil {
 		handleError(err, t)
 	}
