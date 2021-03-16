@@ -2,11 +2,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_learning/server"
+	"goLearning/server"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
 	"github.com/stretchr/testify/assert"
 )
 

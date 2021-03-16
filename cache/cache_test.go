@@ -1,16 +1,27 @@
 package cache
 
 import (
+	"fmt"
+	"goLearning/config"
 	"testing"
 )
 
 var (
+	appConf *config.AppConfInfo
+	RedisConf string
 	db DB
+	err error
 )
 
 func init() {
+	appConf, err = config.LoadConf("../conf/app.yml")
+	if err != nil {
+		panic(err)
+	}
+	RedisConf = appConf.RedisConf
+	fmt.Printf("RedisConf:%v\n", RedisConf)
 	db = DB{}
-	db.Init()
+	db.Init(RedisConf)
 }
 
 func TestInQueue(t *testing.T) {

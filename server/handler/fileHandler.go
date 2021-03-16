@@ -15,7 +15,7 @@ import (
 // @Param file formData file true "file"
 // @Produce  json
 // @Success 200 {object} model.ResponseMessage {"message":200,"size": 4}
-// @Router /upload [post]
+// @Router /tools/file/upload [post]
 func FileUploadHandler(c *gin.Context) {
 	// 单个文件
 	file, err := c.FormFile("file")

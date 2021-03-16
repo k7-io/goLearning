@@ -221,7 +221,7 @@
                 }
             }
         },
-        "/upload": {
+        "/tools/file/upload": {
             "post": {
                 "consumes": [
                     "multipart/form-data"

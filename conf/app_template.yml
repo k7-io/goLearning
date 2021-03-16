@@ -1,0 +1,19 @@
+app_name: bdev
+host: 0
+http_port: 5008
+run_mode: prod
+pg_data_source: user=postgres password=postgres dbname=test host=127.0.0.1 port=5432
+  sslmode=disable
+orm_debug: true
+enable_docs: true
+log_level: 0
+jwt_salt: testsalt
+redis_conf: 127.0.0.1:6379
+oss_conf:
+  end_point: http://oss-cn-beijing.aliyuncs.com
+  bucket: test
+  access_key_id: xxxxx
+  access_key_secret: xxxxx
+doc_conf:
+  api_pre: http://www.hyh.com:8000
+  static_file_path: ./static

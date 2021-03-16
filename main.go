@@ -1,20 +1,31 @@
 package main
 
 import (
-	_ "go_learning/docs"
-	"go_learning/server"
-	"go_learning/server/handler"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"goLearning/config"
+	_ "goLearning/docs"
+	"goLearning/server"
 )
 
-//func main() {
-//	server.MainRedis()
-//}
+var (
+	appConf *config.AppConfInfo
+	err error
+)
 
+func init() {
+	Init()
+}
+func Init()  {
+	appConf, err = config.LoadConf("./conf/app.yml")
+	if err != nil {
+		panic(err)
+	}
+	server.RedisInit(appConf.RedisConf)
+}
+
+func Close()  {
+	server.RedisClose()
+}
 // @title HTTP redis queue API
 // @version 1.0
 // @description This is a http redis queue API
@@ -26,12 +37,12 @@ import (
 // @BasePath /v1/api
 func main() {
 	r := gin.Default()
-	r.POST("/v1/api/json", handler.UserPwdHandler)
-	r.POST("/v1/api/upload", handler.FileUploadHandler)
-	r.POST("/v1/api/multiUpload", handler.MultiFileUpHandler)
+	server.SetupToolRouter(r)
 	server.SetupRedisRouter(r)
-	r.StaticFS("/static", http.Dir("./static"))
-	url := ginSwagger.URL("http://www.hyh.com:8000/swagger/doc.json") // The url pointing to API definition
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
-	r.Run("0.0.0.0:8000")
+	server.SetupDocRouter(r, appConf.DocConf)
+	err := r.Run("0.0.0.0:8000")
+	if err != nil {
+		Close()
+		panic(err)
+	}
 }

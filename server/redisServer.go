@@ -1,10 +1,16 @@
 package server
 
 import (
-	"go_learning/server/handler"
-
 	"github.com/gin-gonic/gin"
+	"goLearning/server/handler"
 )
+
+func RedisInit(redisConf string) {
+	handler.RedisInit(redisConf)
+}
+func RedisClose()  {
+	handler.RedisClose()
+}
 
 func SetupRedisRouter(r *gin.Engine) {
 	group := r.Group("/v1/api/redis")

@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"go_learning/cache"
-	"go_learning/model"
+	"goLearning/cache"
+	"goLearning/model"
 	"log"
 	"reflect"
 
@@ -11,12 +11,19 @@ import (
 )
 
 var (
-	db cache.DB
+	db *cache.DB
 )
 
-func init() {
-	db = cache.DB{}
-	db.Init()
+func RedisInit(redisConf string) {
+	if db == nil {
+		db = &cache.DB{}
+		db.Init(redisConf)
+	}
+}
+func RedisClose()  {
+	if db != nil {
+		db.Close()
+	}
 }
 
 func ErrHandle(err error) {

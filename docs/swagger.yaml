@@ -212,7 +212,7 @@ paths:
       summary: Http redis outQueue
       tags:
       - HttpRedis
-  /upload:
+  /tools/file/upload:
     post:
       consumes:
       - multipart/form-data
