@@ -111,3 +111,62 @@ func generateMatrix(n int) [][]int {
 	}
 	return ans
 }
+
+/*
+二叉树的中序遍历
+给定一个二叉树的根节点 root ，返回它的 中序 遍历。
+*/
+
+//Definition for a binary tree node.
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func inorderTraversal(root *TreeNode) (ans []int) {
+	var inorder func(node *TreeNode)
+	inorder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		inorder(node.Left)
+		ans = append(ans, node.Val)
+		inorder(node.Right)
+	}
+	inorder(root)
+	return ans
+}
+
+/*
+删除排序链表中的重复元素 II
+存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 没有重复出现 的数字。
+
+返回同样按升序排列的结果链表。
+输入：head = [1,2,3,3,4,4,5]
+输出：[1,2,5]
+*/
+//Definition for singly-linked list.
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	dummyNode := &ListNode{0, head}
+	cur := dummyNode
+	for cur.Next != nil && cur.Next.Next != nil {
+		if cur.Next.Val == cur.Next.Next.Val {
+			x := cur.Next.Val
+			for cur.Next != nil && cur.Next.Val == x {
+				cur.Next = cur.Next.Next
+			}
+		} else {
+			cur = cur.Next
+		}
+	}
+	return dummyNode.Next
+}
