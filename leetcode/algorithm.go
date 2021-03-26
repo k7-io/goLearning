@@ -117,13 +117,6 @@ func generateMatrix(n int) [][]int {
 给定一个二叉树的根节点 root ，返回它的 中序 遍历。
 */
 
-//Definition for a binary tree node.
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 func inorderTraversal(root *TreeNode) (ans []int) {
 	var inorder func(node *TreeNode)
 	inorder = func(node *TreeNode) {
@@ -146,11 +139,6 @@ func inorderTraversal(root *TreeNode) (ans []int) {
 输入：head = [1,2,3,3,4,4,5]
 输出：[1,2,5]
 */
-//Definition for singly-linked list.
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
 
 func deleteDuplicates(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
