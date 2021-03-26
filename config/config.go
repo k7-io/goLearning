@@ -20,6 +20,7 @@ type AppConfInfo struct {
 	LogLevel        int    `yaml:"log_level" json:"log_level"`
 	JwtSalt         string `yaml:"jwt_salt" json:"jwt_salt"`
 	RedisConf       string `yaml:"redis_conf" json:"redis_conf"`
+	RedisConfPasswd string `yaml:"redis_conf_passwd" json:"redis_conf_passwd"`
 	OSSConf 		OSSConfInfo `yaml:"oss_conf" json:"oss_conf"`
 	DocConf			DocConfInfo `yaml:"doc_conf" json:"doc_conf"`
 }
