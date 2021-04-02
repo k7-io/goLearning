@@ -7,5 +7,6 @@ conf/app.yml
 
 test/*_tmp.txt
 static/*
+*/*.db
 
 */__pycache__/*

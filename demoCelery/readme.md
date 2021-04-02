@@ -76,17 +76,16 @@ Configuration ->
 [2021-04-02 15:22:40,999: INFO/MainProcess] Scheduler: Sending due task main.minus() (main.minus)
 [2021-04-02 15:22:41,059: DEBUG/MainProcess] main.minus sent. id->db5ba142-7c80-4c47-a10e-b0a68e5f9a79
 [2021-04-02 15:22:41,059: DEBUG/MainProcess] beat: Waking up in 4.91 seconds.
-[2021-04-02 15:22:45,980: INFO/MainProcess] Scheduler: Sending due task main.minus() (main.minus)
-[2021-04-02 15:22:45,986: DEBUG/MainProcess] main.minus sent. id->5ac31a67-d95e-4186-b8a8-ad9bb44c1508
-[2021-04-02 15:22:45,986: DEBUG/MainProcess] beat: Waking up in 4.98 seconds.
 ```
 
 启动单个任务. 触发main.add:
 ```shell
-➜  demoCelery git:(dev_hyh) ✗ python main.py
--> sender:<Celery tasks at 0x109ef40d0>
-add:<@task: main.add of tasks at 0x109ef40d0>
-ar:bb98dfa1-2653-4ff5-9911-b83ce4c1fa48
+() ➜  demoCelery git:(dev_hyh) ✗ python main.py
+-> sender:<Celery tasks at 0x10f71f0d0>
+add:<@task: main.add of tasks at 0x10f71f0d0>
+ar:0201bd9b-9d70-4fa9-8872-4587d9dd5b37
+8335
+() ➜  demoCelery git:(dev_hyh) ✗ 
 ```
 
 

@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"github.com/gocelery/gocelery"
 	"github.com/gomodule/redigo/redis"
+	"reflect"
 	"time"
 )
 
 
-func minus()  {
+func minus(n int) int{
 	start := time.Now()
-	fmt.Printf("start:%v\n", start)
-	decrement(100000)
-	fmt.Printf("end start:%v since:%v\n", start, time.Since(start))
+	fmt.Printf("n:%v\n", n)
+	decrement(n)
+	fmt.Printf("since:%v\n", time.Since(start))
+	return n
 }
 func decrement(n int)  {
 	if n > 0 {
@@ -46,6 +48,26 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	go func() {
+		// celery worker 启动后
+		fmt.Printf("go server start after 3s\n")
+		time.Sleep(3 * time.Second)
+		fmt.Printf("go server ok\n")
+		// prepare arguments
+		taskName := "main.add"
+		// run task
+		asyncResult, err := cli.Delay(taskName, 100, 100)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("task status:%v\n", asyncResult.TaskID)
+		// get results from backend with timeout
+		res, err := asyncResult.Get(1 * time.Second)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("result: %+v of type %+v", res, reflect.TypeOf(res))
+	}()
 
 	// register task
 	cli.Register("main.minus", minus)
@@ -53,7 +75,7 @@ func main() {
 
 	// start workers (non-blocking call)
 	cli.StartWorker()
-	fmt.Printf("-->start go work")
+	fmt.Printf("-->start go work\n")
 
 	// wait for client request
 	time.Sleep(1000 * time.Second)
