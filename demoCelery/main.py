@@ -15,12 +15,13 @@ app.conf.update(
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     """
+    需要启动周期任务.
     每5s调度一次minus
     """
     print('-> sender:{}'.format(sender))
     sender.add_periodic_task(5.0, minus.s())
 
-@app.task
+@app.task(name='main.minus')
 def minus():
     """
     1亿减到1.
@@ -31,4 +32,14 @@ def minus():
     #     x -= 1
     print("x ==> done")
 
+
+@app.task(name='main.add')
+def add(x, y):
+    return x + y
 ## celery -A main beat
+
+if __name__ == '__main__':
+    print("add:{}".format(add))
+    ar = add.apply_async((5456, 2879), serializer='json')
+    print("ar:{}".format(ar))
+    # print(ar.get())

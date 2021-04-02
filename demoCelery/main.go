@@ -19,6 +19,10 @@ func decrement(n int)  {
 		n -= 1
 	}
 }
+func add(x, y int) int{
+	fmt.Printf("add-->%v + %v\n", x, y)
+	return x + y
+}
 
 
 func main() {
@@ -43,12 +47,9 @@ func main() {
 		panic(err)
 	}
 
-	// task
-	//add := func(a, b int) int {
-	//	return a + b
-	//}
 	// register task
 	cli.Register("main.minus", minus)
+	cli.Register("main.add", add)
 
 	// start workers (non-blocking call)
 	cli.StartWorker()
