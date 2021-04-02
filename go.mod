@@ -16,6 +16,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gobwas/glob v0.2.3 // indirect
+	github.com/gocelery/gocelery v0.0.0-20201111034804-825d89059344 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible
@@ -25,7 +26,6 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
-	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
