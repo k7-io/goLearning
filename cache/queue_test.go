@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"fmt"
+	"github.com/gomodule/redigo/redis"
 	"goLearning/config"
 	"testing"
 )
@@ -9,7 +9,8 @@ import (
 var (
 	appConf *config.AppConfInfo
 	RedisConf string
-	db DB
+	db DBQueue
+	conn redis.Conn
 	err error
 )
 
@@ -18,10 +19,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	RedisConf = appConf.RedisConf
-	fmt.Printf("RedisConf:%v\n", RedisConf)
-	db = DB{}
-	db.Init(RedisConf)
+	CMInit(appConf.RedisConf, appConf.RedisConfPasswd)
+	db = DBQueue{}
 }
 
 func TestInQueue(t *testing.T) {
@@ -34,9 +33,12 @@ func TestInQueue(t *testing.T) {
 			expected: nil,
 		},
 	}
+	conn = GetCache()
+	db.Init(conn)
+	defer db.Close()
 	for _, dt := range dataTests {
 		name := "myTestInQueue"
-		db.client.Do("del", name)
+		db.DelKey(name)
 		inData := make([]interface{}, len(dt.inData))
 		for i := 0; i < len(inData); i++ {
 			inData[i] = dt.inData[i]
@@ -61,9 +63,12 @@ func TestLen(t *testing.T) {
 			expected: 3,
 		},
 	}
+	conn = GetCache()
+	db.Init(conn)
+	defer db.Close()
 	for _, dt := range dataTests {
 		name := "myLen"
-		db.client.Do("del", name)
+		db.Client.Do("del", name)
 		inData := make([]interface{}, len(dt.inData))
 		for i := 0; i < len(inData); i++ {
 			inData[i] = dt.inData[i]
@@ -96,9 +101,13 @@ func TestOutQueue(t *testing.T) {
 			expected: []string{"1", "2", "3"},
 		},
 	}
+	conn = GetCache()
+	db.Init(conn)
+	defer db.Close()
+
 	for _, dt := range dataTests {
 		name := "myTestOutQueue"
-		db.client.Do("del", name)
+		db.DelKey(name)
 		inData := make([]interface{}, len(dt.inData))
 		for i := 0; i < len(inData); i++ {
 			inData[i] = dt.inData[i]
@@ -120,7 +129,5 @@ func TestOutQueue(t *testing.T) {
 				res, dt.expected)
 		}
 	}
-
-	db.Close()
 	t.Log("TEST ", db)
 }

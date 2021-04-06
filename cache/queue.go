@@ -4,31 +4,31 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
-type DB struct {
-	client redis.Conn
+type DBQueue struct {
+	Client redis.Conn
 }
 
 
-func (db *DB) Init(redisConf string) {
-	c, err := redis.Dial("tcp", redisConf)
-	if err != nil {
-		// handle error
-		panic("redis conn err:" + err.Error())
-	}
-	db.client = c
-	//defer c.Close()
+func (db *DBQueue) Init(conn redis.Conn) {
+	db.Client = conn
 }
 
-func (db *DB) Close() {
-	if db.client != nil {
-		db.client.Close()
+func (db *DBQueue) Close() {
+	if db.Client != nil {
+		db.Client.Close()
 	}
 }
+func (db *DBQueue) Check() {
+	if db.Client == nil {
+		panic("db client must be init")
+	}
+}
 
-func (db *DB) InQueue(name string, values []interface{}) (err error) {
+func (db *DBQueue) InQueue(name string, values []interface{}) (err error) {
+	db.Check()
 	size := len(values)
 	for i := 0; i < size; i++ {
-		_, err := db.client.Do("RPUSH", name, values[i])
+		_, err := db.Client.Do("RPUSH", name, values[i])
 		if err != nil {
 			return err
 		}
@@ -36,17 +36,20 @@ func (db *DB) InQueue(name string, values []interface{}) (err error) {
 	return nil
 }
 
-func (db *DB) Len(name string) (int, error) {
-	return redis.Int(db.client.Do("LLEN", name))
+func (db *DBQueue) Len(name string) (int, error) {
+	db.Check()
+	return redis.Int(db.Client.Do("LLEN", name))
 }
 
-func (db *DB) OutQueueOne(name string) (value interface{}, err error) {
-	reply, err := db.client.Do("LPOP", name)
+func (db *DBQueue) OutQueueOne(name string) (value interface{}, err error) {
+	db.Check()
+	reply, err := db.Client.Do("LPOP", name)
 	return reply, err
 	//return db.client.Do("LPOP", name)
 }
 
-func (db *DB) OutQueue(name string) (values []interface{}, err error) {
+func (db *DBQueue) OutQueue(name string) (values []interface{}, err error) {
+	db.Check()
 	size, err := db.Len(name)
 	if err != nil {
 		return nil, err
@@ -61,8 +64,9 @@ func (db *DB) OutQueue(name string) (values []interface{}, err error) {
 	return values, nil
 }
 
-func (db *DB) DelDBName(name string) (reply interface{}, err error) {
-	return db.client.Do("del", name)
+func (db *DBQueue) DelKey(name string) (reply interface{}, err error) {
+	db.Check()
+	return db.Client.Do("del", name)
 }
 
 func StringSliceEqual(a, b []string) bool {
