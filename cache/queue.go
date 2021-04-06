@@ -4,12 +4,23 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
+type Queue interface {
+	Len(name string) (int, error)
+	InQueue(name string, values []interface{}) (err error)
+	OutQueueOne(name string) (value interface{}, err error)
+	DelKey(name string) (reply interface{}, err error)
+}
+
+
 type DBQueue struct {
 	Client redis.Conn
 }
 
 
 func (db *DBQueue) Init(conn redis.Conn) {
+	if conn == nil {
+		conn = GetCache()
+	}
 	db.Client = conn
 }
 
