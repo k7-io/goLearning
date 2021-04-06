@@ -56,7 +56,6 @@ func (db *DBQueue) OutQueueOne(name string) (value interface{}, err error) {
 	db.Check()
 	reply, err := db.Client.Do("LPOP", name)
 	return reply, err
-	//return db.client.Do("LPOP", name)
 }
 
 func (db *DBQueue) OutQueue(name string) (values []interface{}, err error) {

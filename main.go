@@ -14,9 +14,6 @@ var (
 )
 
 func init() {
-	Init()
-}
-func Init()  {
 	appConf, err = config.LoadConf("./conf/app.yml")
 	if err != nil {
 		panic(err)
