@@ -18,7 +18,7 @@ func FmtResponse(c *gin.Context, response *model.FmtResponse) {
 // @Accept  json
 // @Produce  json
 // @Param name body model.ListLenOutQueueStruct true "db name"
-// @Success 200 {object} model.FmtResponse
+// @success 200 {object} model.FmtResponse{data=int} "desc"
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
@@ -58,7 +58,7 @@ func HttpRedisLen(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param massage body model.ListInQueueStruct true "message"
-// @Success 200 {object} model.FmtResponse
+// @success 200 {object} model.FmtResponse{data=[]int}
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
@@ -104,7 +104,7 @@ func HttpRedisInQueue(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param name body model.ListLenOutQueueStruct true "db name"
-// @Success 200 {object} model.FmtResponse
+// @success 200 {object} model.FmtResponse{data=[]string}
 // @Failure 400 {object} httputil.HTTPError
 // @Failure 404 {object} httputil.HTTP404Error
 // @Failure 500 {object} httputil.HTTP5xxError
