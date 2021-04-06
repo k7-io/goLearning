@@ -49,6 +49,9 @@ func CMInit(server, password string) {
 	if pool == nil {
 		pool = newPool(server, password)
 	}
+	if pool == nil {
+		panic("cache pool init fail")
+	}
 }
 
 func GetCache() redis.Conn{

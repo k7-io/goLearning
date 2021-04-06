@@ -1,7 +1,7 @@
 # go_learning
-go code or notes
+go code or notes or study guide
 
-## 01.
-## 02.
-## 03.
-## 04.
+## todo
+
+* redis cache by beego
+* 
