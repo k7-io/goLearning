@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"goLearning/cache"
 	"goLearning/config"
 	_ "goLearning/docs"
 	"goLearning/server"
@@ -20,12 +21,9 @@ func Init()  {
 	if err != nil {
 		panic(err)
 	}
-	server.RedisInit(appConf.RedisConf)
+	cache.CMInit(appConf.RedisConf, appConf.RedisConfPasswd)
 }
 
-func Close()  {
-	server.RedisClose()
-}
 // @title HTTP redis queue API
 // @version 1.0
 // @description This is a http redis queue API
@@ -42,7 +40,6 @@ func main() {
 	server.SetupDocRouter(r, appConf.DocConf)
 	err := r.Run("0.0.0.0:8000")
 	if err != nil {
-		Close()
 		panic(err)
 	}
 }
