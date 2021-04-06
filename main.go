@@ -6,6 +6,8 @@ import (
 	"goLearning/config"
 	_ "goLearning/docs"
 	"goLearning/server"
+	"io"
+	"os"
 )
 
 var (
@@ -19,6 +21,8 @@ func init() {
 		panic(err)
 	}
 	cache.CMInit(appConf.RedisConf, appConf.RedisConfPasswd)
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f)
 }
 
 // @title HTTP redis queue API

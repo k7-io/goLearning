@@ -368,6 +368,9 @@ var doc = `{
         },
         "model.ListInQueueStruct": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "element": {
                     "type": "array",

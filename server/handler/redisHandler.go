@@ -8,7 +8,7 @@ import (
 )
 
 func FmtResponse(c *gin.Context, response *model.FmtResponse) {
-	c.JSON(200, response)
+	c.JSON(response.Code, response)
 }
 
 // HttpRedisLen godoc
@@ -28,10 +28,7 @@ func HttpRedisLen(c *gin.Context) {
 	resp := model.NewFmtResponse()
 	var lenStruct model.ListLenOutQueueStruct
 	if err = c.BindJSON(&lenStruct); err != nil {
-		resp.Code = 400
-		resp.Msg = err.Error()
-		log.Fatal(resp)
-		FmtResponse(c, resp)
+		log.Printf("err:%v\n", err)
 		return
 	}
 	name := lenStruct.Name
@@ -66,21 +63,19 @@ func HttpRedisLen(c *gin.Context) {
 func HttpRedisInQueue(c *gin.Context) {
 	var err error
 	var inQueueStruct model.ListInQueueStruct
-	resp := model.NewFmtResponse()
 	if err = c.BindJSON(&inQueueStruct); err != nil {
-		resp.Code = 400
-		resp.Msg = err.Error()
-		log.Fatal(resp)
-		FmtResponse(c, resp)
+		log.Printf("err:%v\n", err)
 		return
 	}
 	name := inQueueStruct.Name
+	// 验证器：验证参数合法.
 	eleList := inQueueStruct.Items
 	inData := make([]interface{}, len(eleList))
 	for i := 0; i < len(inData); i++ {
 		inData[i] = eleList[i]
 	}
 	// todo: 优化. init -> NewQueue
+	resp := model.NewFmtResponse()
 	var queue cache.DBQueue
 	queue.Init(nil)
 	defer queue.Close()
@@ -88,7 +83,7 @@ func HttpRedisInQueue(c *gin.Context) {
 	if err != nil {
 		resp.Code = 500
 		resp.Msg = err.Error()
-		log.Fatal(resp)
+		log.Print(resp)
 		FmtResponse(c, resp)
 		return
 	}
@@ -111,16 +106,13 @@ func HttpRedisInQueue(c *gin.Context) {
 // @Router /redis/list/outQueue [post]
 func HttpRedisOutQueue(c *gin.Context) {
 	var outStruct model.ListLenOutQueueStruct
-	resp := model.NewFmtResponse()
 	if err := c.BindJSON(&outStruct); err != nil {
-		resp.Code = 400
-		resp.Msg = err.Error()
-		log.Fatal(resp)
-		FmtResponse(c, resp)
+		log.Printf("err:%v\n", err)
 		return
 	}
 	name := outStruct.Name
 	// todo: 优化. init -> NewQueue
+	resp := model.NewFmtResponse()
 	var queue cache.DBQueue
 	queue.Init(nil)
 	defer queue.Close()
@@ -128,7 +120,7 @@ func HttpRedisOutQueue(c *gin.Context) {
 	if err != nil {
 		resp.Code = 500
 		resp.Msg = err.Error()
-		log.Fatal(resp)
+		log.Print(resp)
 		FmtResponse(c, resp)
 		return
 	}

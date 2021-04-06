@@ -51,6 +51,8 @@ definitions:
       name:
         example: list name
         type: string
+    required:
+    - name
     type: object
   model.ListLenOutQueueStruct:
     properties:

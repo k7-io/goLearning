@@ -16,7 +16,7 @@ type ListLenOutQueueStruct struct {
 }
 
 type ListInQueueStruct struct {
-	Name  string `json:"name" example:"list name"`
+	Name  string `json:"name" binding:"required" example:"list name"`
 	Items []int  `json:"element" example:"1,2,3"`
 }
 
