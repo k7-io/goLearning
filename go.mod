@@ -11,14 +11,13 @@ require (
 	github.com/antchfx/xmlquery v1.2.4 // indirect
 	github.com/antchfx/xpath v1.1.8 // indirect
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-playground/validator/v10 v10.4.2 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/gocelery/gocelery v0.0.0-20201111034804-825d89059344 // indirect
+	github.com/gocelery/gocelery v0.0.0-20201111034804-825d89059344
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible
@@ -27,7 +26,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.6 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/swaggo/gin-swagger v1.3.0
@@ -45,5 +44,6 @@ require (
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 	gopkg.in/yaml.v2 v2.4.0
-	gorm.io/gorm v1.21.5 // indirect
+	gorm.io/driver/sqlite v1.1.4 // indirect
+	gorm.io/gorm v1.21.6 // indirect
 )
