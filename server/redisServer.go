@@ -5,13 +5,6 @@ import (
 	"goLearning/server/handler"
 )
 
-func RedisInit(redisConf string) {
-	handler.RedisInit(redisConf)
-}
-func RedisClose()  {
-	handler.RedisClose()
-}
-
 func SetupRedisRouter(r *gin.Engine) {
 	group := r.Group("/v1/api/redis")
 	{
@@ -24,10 +17,4 @@ func SetupRedisRouter(r *gin.Engine) {
 		// todo: nested group:zset
 	}
 	return
-}
-
-func MainRedis() {
-	r := gin.Default()
-	SetupRedisRouter(r)
-	r.Run(":8000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

@@ -9,33 +9,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+var queue cache.DBQueue
 
-var (
-	db *cache.DB
-)
-
-func RedisInit(redisConf string) {
-	if db == nil {
-		db = &cache.DB{}
-		db.Init(redisConf)
-	}
-}
-func RedisClose()  {
-	if db != nil {
-		db.Close()
-	}
+func init() {
+	queue = cache.DBQueue{}
 }
 
 func ErrHandle(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func dbTest() {
-	size, err := db.Len("myLen")
-	ErrHandle(err)
-	fmt.Printf("size:%v\n", size)
 }
 
 // HttpRedisLen godoc
@@ -57,7 +40,9 @@ func HttpRedisLen(c *gin.Context) {
 		log.Fatal(err.Error())
 	}
 	name := lenStruct.Name
-	size, err := db.Len(name)
+	queue.Init(nil)
+	defer queue.Close()
+	size, err := queue.Len(name)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": err.Error(),
@@ -95,7 +80,9 @@ func HttpRedisInQueue(c *gin.Context) {
 	for i := 0; i < len(inData); i++ {
 		inData[i] = eleList[i]
 	}
-	err := db.InQueue(name, inData)
+	queue.Init(nil)
+	defer queue.Close()
+	err := queue.InQueue(name, inData)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": err.Error(),
@@ -127,7 +114,9 @@ func HttpRedisOutQueue(c *gin.Context) {
 		log.Fatal(err.Error())
 	}
 	name := outStruct.Name
-	res, err := db.OutQueue(name)
+	queue.Init(nil)
+	defer queue.Close()
+	res, err := queue.OutQueue(name)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": err.Error(),
