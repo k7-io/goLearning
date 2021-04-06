@@ -27,6 +27,17 @@ definitions:
         example: status bad request
         type: string
     type: object
+  model.FmtResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        type: object
+      msg:
+        example: success
+        type: string
+    type: object
   model.ListInQueueStruct:
     properties:
       element:
@@ -128,7 +139,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ResponseMessage'
+            allOf:
+            - $ref: '#/definitions/model.FmtResponse'
+            - properties:
+                data:
+                  items:
+                    type: integer
+                  type: array
+              type: object
         "400":
           description: Bad Request
           schema:
@@ -160,9 +178,14 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: desc
           schema:
-            $ref: '#/definitions/model.ResponseMessage'
+            allOf:
+            - $ref: '#/definitions/model.FmtResponse'
+            - properties:
+                data:
+                  type: integer
+              type: object
         "400":
           description: Bad Request
           schema:
@@ -196,7 +219,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ResponseMessage'
+            allOf:
+            - $ref: '#/definitions/model.FmtResponse'
+            - properties:
+                data:
+                  items:
+                    type: string
+                  type: array
+              type: object
         "400":
           description: Bad Request
           schema:
