@@ -68,7 +68,7 @@ func TestLen(t *testing.T) {
 	defer db.Close()
 	for _, dt := range dataTests {
 		name := "myLen"
-		db.Client.Do("del", name)
+		db.DelKey(name)
 		inData := make([]interface{}, len(dt.inData))
 		for i := 0; i < len(inData); i++ {
 			inData[i] = dt.inData[i]
@@ -85,9 +85,8 @@ func TestLen(t *testing.T) {
 			t.Errorf("TestLen size:%v dt.expected:%v inData:%v err:%v",
 				size, dt.expected, dt.inData, err)
 		}
+		t.Logf("size:%v", size)
 	}
-
-	db.Close()
 	t.Log("TEST ", db)
 }
 
