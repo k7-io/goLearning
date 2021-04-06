@@ -26,9 +26,9 @@ type UserInfo struct {
 }
 
 type FmtResponse struct {
-	Code int `form:"code" json:"code" example:"200"`
-	Msg string `form:"msg" json:"msg" example:"success"`
-	Data interface{} `form:"data" json:"data" example:"{}"`
+	Code int `json:"code" example:"200"`
+	Msg string `json:"msg" example:"success"`
+	Data interface{} `json:"data"`
 }
 
 func NewFmtResponse() *FmtResponse{
